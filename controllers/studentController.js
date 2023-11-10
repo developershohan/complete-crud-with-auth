@@ -3,11 +3,19 @@
  */
 
 import Student from "../models/student.js";
+let studentPhoto = null;
+
+/**
+ * @DESC POST STUDENT
+ * @ROUTE STUDENT
+ * @METHOD POST
+ * @ACCESS PUBLIC
+ */
 
 export const createStudent = async (req, res) => {
 	const { name, roll } = req.body;
 
-	let studentPhoto = null;
+
 
 	if (req.file?.filename) {
 		studentPhoto = req.file.filename;
@@ -20,12 +28,22 @@ export const createStudent = async (req, res) => {
 
 	res.status(200).json(data);
 };
-// get all students
+/**
+ * @DESC GET ALL STUDENT
+ * @ROUTE STUDENT
+ * @METHOD POST
+ * @ACCESS PUBLIC
+ */
 
 export const getAllStudents = async (req,res) =>{
     const data = await Student.find()
-    res.status(200).json(data);
 
+if (data.length === 0) {
+	
+	return res.status(404).json({message: "student not found", Student:[]});
+}
+
+res.status(200).json({message:`Total Students ${data.length}`,Student:data});
 }
 // get one students
 
@@ -43,11 +61,24 @@ export const deletOneStudent = async (req,res) =>{
     res.status(200).json(data);
 
 }
-// get all students
+// delete all students
 
 export const deletAllStudents = async (req,res) =>{
 
     const data = await Student.deleteMany()
     res.status(200).json(data);
 
+}
+
+// get update students
+
+export const updateStudents = async(req,res) =>{
+	const {id} = req.params;
+	const { name, roll } = req.body;
+	
+	if (req.file?.filename) {
+		studentPhoto = req.file.filename;
+	}
+	const data = await Student.findByIdAndUpdate(id, { name, roll, photo: studentPhoto }, {new:true})
+	res.status(200).json(data);
 }

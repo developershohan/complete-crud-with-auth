@@ -4,6 +4,7 @@ const studentSchema = mongoose.Schema(
 	{
 		name: {
 			type: String,
+			required: [true,"name field is required"],
 			trim: true,
 		},
         roll: {

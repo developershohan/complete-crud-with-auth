@@ -1,6 +1,7 @@
 import express  from "express";
 import dotenv from "dotenv" 
 import studentRoute from "./Routers/studentRoute.js";
+import bookRoute from "./Routers/bookRoute.js";
 import { mongodbconnection } from "./config/mongodb.js";
 
 
@@ -17,6 +18,7 @@ app.use(express.static("public"))
 
 
 app.use(studentRoute)
+app.use(bookRoute)
 
 app.listen(PORT,()=>{
     mongodbconnection()

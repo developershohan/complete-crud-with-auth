@@ -5,6 +5,9 @@ const storage = multer.diskStorage({
 		if (file.fieldname === "studentPhoto") {
 			cb(null, "public/images/students");
 		}
+		if (file.fieldname === "bookPhoto") {
+			cb(null, "public/images/books");
+		}
 	},
 	filename: (req, file, cb) => {
 		cb(
@@ -19,3 +22,5 @@ const storage = multer.diskStorage({
 });
 
 export const createStudentMulter = multer({ storage }).single("studentPhoto");
+export const createBookMulter = multer({ storage }).single("bookPhoto");
+
